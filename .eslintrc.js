@@ -1,0 +1,56 @@
+module.exports = {
+  env: {
+    browser: true,
+    es2022: true,
+    jest: true,
+  },
+  extends: [
+    'react-app',
+    'react-app/jest',
+    'plugin:import/typescript',
+    'plugin:prettier/recommended',
+  ],
+  parser: '@typescript-eslint/parser',
+  overrides: [
+    {
+      files: ['*.ts', '*.tsx'],
+      parserOptions: {
+        project: ['./tsconfig.json'],
+      },
+    },
+  ],
+  parserOptions: {
+    ecmaFeatures: {
+      jsx: true,
+    },
+    ecmaVersion: 'latest',
+    sourceType: 'module',
+  },
+  plugins: ['react', '@typescript-eslint', 'prettier', 'testing-library'],
+  rules: {
+    indent: ['error', 2],
+    'linebreak-style': ['error', 'unix'],
+    quotes: ['error', 'single'],
+    semi: ['error', 'always'],
+    'prettier/prettier': 'off',
+    'spaced-comment': 'off',
+    'no-console': 'warn',
+    'consistent-return': 'off',
+    'func-names': 'off',
+    'object-shorthand': 'off',
+    'no-process-exit': 'off',
+    'no-param-reassign': 'off',
+    'no-return-await': 'off',
+    'no-underscore-dangle': 'off',
+    'class-methods-use-this': 'off',
+    'prefer-destructuring': ['error', { object: true, array: false }],
+    'no-unused-vars': 'warn',
+    'newline-before-return': 1,
+    'react/react-in-jsx-scope': ['off'],
+    'react/jsx-uses-react': ['off'],
+    'react/no-unescaped-entities': ['off'],
+    'react/prop-types': 0,
+    'react/static-property-placement': 0,
+    'testing-library/prefer-screen-queries': 0,
+  },
+};
