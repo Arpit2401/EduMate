@@ -1,11 +1,4 @@
-import {
-  Box,
-  Button,
-  Card,
-  CardContent,
-  Typography,
-  useMediaQuery,
-} from '@mui/material';
+import { Box, Button, Typography, useMediaQuery } from '@mui/material';
 
 import {
   ChevronRight,
@@ -17,11 +10,8 @@ import {
 import {
   Autoplay,
   EffectCoverflow,
-  FreeMode,
-  Mousewheel,
   Navigation,
   Pagination,
-  Scrollbar,
 } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/pagination';
@@ -29,76 +19,11 @@ import 'swiper/css/pagination';
 import '../../App.css';
 import React from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
+import Testimonials from 'components/Testimonials/Testimonials.component';
+import NoticeBoard from 'components/NoticeBoard/NoticeBoard.component';
 
 const App = () => {
   const isMobile = useMediaQuery('(max-width:768px)');
-  const NewsContainer = ({ news }: { news: string[] }) => {
-    return (
-      <Box
-        display="flex"
-        flexDirection="column"
-        borderRadius="15px"
-        maxHeight="40rem"
-        padding="2rem 1rem"
-        overflow="visible"
-        width="100%"
-        boxShadow="0px 0px 15px 4px rgba(222,222,222,0.8)"
-      >
-        <Swiper
-          direction={'vertical'}
-          slidesPerView={'auto'}
-          freeMode={true}
-          scrollbar={true}
-          mousewheel={true}
-          autoplay={{
-            delay: 1500,
-            disableOnInteraction: false,
-          }}
-          modules={[FreeMode, Scrollbar, Mousewheel, Autoplay]}
-        >
-          {news.map((headline) => (
-            <SwiperSlide>
-              <Box
-                sx={{
-                  backdropFilter: 'blur(0px) saturate(0%)',
-                  backgroundColor: 'primary.main',
-                }}
-                margin="0 auto 2rem"
-                maxHeight="fit-content"
-                minHeight="fit-content"
-                minWidth="4rem"
-                maxWidth="90%"
-                padding="1rem"
-                borderRadius="15px"
-                border=" 1px solid rgba(209, 213, 219, 0.3)"
-              >
-                <Typography color="white" variant="body1" fontWeight="bold">
-                  Schools will be closed for the next Friday and Saturday.
-                  School Timings for the rest of the week will be 10 am - 3pm.
-                </Typography>
-              </Box>
-            </SwiperSlide>
-          ))}
-        </Swiper>
-      </Box>
-    );
-  };
-
-  const newspaper = [
-    'Breaking News 1',
-    'Important Update 2',
-    'Latest Developments 3',
-    'Breaking News 4',
-    'Important Update 5',
-    'Latest Developments 6',
-    'Breaking News 7',
-    'Important Update 8',
-    'Latest Developments 9',
-    'Breaking News 10',
-    'Important Update 11',
-    'Latest Developments 12',
-    // Add more news headlines as needed
-  ];
 
   interface Event {
     title: string;
@@ -236,49 +161,6 @@ const App = () => {
       image: 'https://via.placeholder.com/600x200',
     },
     // Add more events as needed
-  ];
-
-  interface TestimonialProps {
-    author: string;
-    content: string;
-  }
-
-  const Testimonial: React.FC<TestimonialProps> = ({ author, content }) => {
-    return (
-      <Card sx={{ borderRadius: '15px' }}>
-        <CardContent>
-          <Typography variant="body1" gutterBottom>
-            "{content}"
-          </Typography>
-          <Typography variant="body2" color="textSecondary">
-            - {author}
-          </Typography>
-        </CardContent>
-      </Card>
-    );
-  };
-
-  const testimonials = [
-    {
-      author: 'Parent 1',
-      content: 'Great school with excellent teachers. My child loves it here!',
-    },
-    {
-      author: 'Student 1',
-      content:
-        'Amazing extracurricular activities and a supportive environment.',
-    },
-    {
-      author: 'Student 1',
-      content:
-        'Amazing extracurricular activities and a supportive environment.',
-    },
-    {
-      author: 'Student 1',
-      content:
-        'Amazing extracurricular activities and a supportive environment.',
-    },
-    // Add more testimonials as needed
   ];
 
   return (
@@ -600,7 +482,7 @@ const App = () => {
               margin=".5rem 0"
               fontWeight="bold"
             >
-              We have the best teachers in the community
+              We have skilled educators shaping tomorrow's leaders!
             </Typography>
           </Box>
           <Box
@@ -630,7 +512,7 @@ const App = () => {
               }}
             />
             <Typography variant="h2" textAlign="center" margin=".5rem 0">
-              Best Teachers
+              Best Curriculum
             </Typography>
             <Typography
               variant="body1"
@@ -638,7 +520,7 @@ const App = () => {
               margin=".5rem 0"
               fontWeight="bold"
             >
-              We have the best teachers in the community
+              Unlocking potential through innovative learning pathways!
             </Typography>
           </Box>
           <Box
@@ -674,7 +556,7 @@ const App = () => {
               textAlign="center"
               margin=".5rem 0"
             >
-              Best Teachers
+              Best Facilities
             </Typography>
             <Typography
               variant="body1"
@@ -683,7 +565,7 @@ const App = () => {
               margin=".5rem 0"
               fontWeight="bold"
             >
-              We have the best teachers in the community
+              Enhancing learning experiences with cutting-edge amenities!
             </Typography>
           </Box>
         </Box>
@@ -695,13 +577,12 @@ const App = () => {
         textAlign="center"
       >
         <Typography variant="body1" component="p">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis,
-          praesentium! Reprehenderit minima fugit error assumenda. Suscipit
-          consequuntur quisquam sequi illum quaerat, dicta nisi! Corrupti, quae
-          quo dolore saepe veritatis modi. Qui fuga recusandae dignissimos cum
-          dicta, rem fugiat. Tenetur iure aliquid quasi possimus sunt harum
-          inventore iusto. Facilis saepe adipisci magni cum laboriosam, ex eos
-          nostrum expedita maiores architecto voluptate.
+          Step into our school, where dedicated teachers nurture minds,
+          cutting-edge amenities enrich experiences, and engaging events foster
+          creativity. From innovative curriculum to supportive staff, we create
+          an environment where every student thrives. Explore the endless
+          opportunities awaiting you in our vibrant community of learning and
+          discovery.
         </Typography>
       </Box>
       <Box maxWidth="1280px" padding="0 15px" margin="0 auto">
@@ -820,16 +701,7 @@ const App = () => {
             </Box>
           </Box>
           <Box width={{ xs: '100%', md: '50%' }}>
-            <Typography
-              variant="h2"
-              component="h2"
-              textAlign="center"
-              color="secondary.main"
-              marginBottom="2rem"
-            >
-              Notice Board
-            </Typography>
-            <NewsContainer news={newspaper} />
+            <NoticeBoard />
           </Box>
         </Box>
       </Box>
@@ -1073,46 +945,7 @@ const App = () => {
           </Swiper>
         </Box>
       </Box>
-      <Box
-        maxWidth="1280px"
-        margin={{ xs: '10rem 2rem', md: '10rem auto' }}
-        padding="0 1.5rem"
-      >
-        <Typography
-          variant="h2"
-          component="h2"
-          textAlign="center"
-          color="secondary.main"
-          marginBottom="1rem"
-        >
-          Testimonials
-        </Typography>
-        <Swiper
-          spaceBetween={30}
-          centeredSlides={true}
-          slidesPerView={isMobile ? 1 : 3}
-          autoplay={{
-            delay: 2500,
-            disableOnInteraction: false,
-          }}
-          pagination={{
-            clickable: true,
-          }}
-          loop={true}
-          navigation={true}
-          rewind={true}
-          modules={[Autoplay, Pagination, Navigation]}
-          className="mySwiper"
-        >
-          {testimonials.map((testimonial, index) => (
-            <SwiperSlide>
-              <Box minHeight="18rem" marginTop="2rem">
-                <Testimonial key={index} {...testimonial} />
-              </Box>
-            </SwiperSlide>
-          ))}
-        </Swiper>
-      </Box>
+      <Testimonials />
     </Box>
   );
 };

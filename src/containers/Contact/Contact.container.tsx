@@ -1,6 +1,11 @@
-import { Box, Typography } from '@mui/material';
+import { Box, Button, TextField, Typography } from '@mui/material';
+import { useState } from 'react';
+import { useForm } from 'react-hook-form';
 
 const Contact = () => {
+  const { register, handleSubmit } = useForm();
+  const [data, setData] = useState('');
+
   return (
     <Box maxWidth="1280px" margin="0 auto">
       <Typography
@@ -13,6 +18,79 @@ const Contact = () => {
       >
         Contact Us
       </Typography>
+      <Box
+        display="flex"
+        alignItems="center"
+        gap="2rem"
+        width="100%"
+        flexWrap="wrap"
+        justifyContent="center"
+      >
+        <TextField
+          {...register('fullName')}
+          required
+          id="outlined-required"
+          label="Full name"
+          sx={{
+            width: { xs: '100%', sm: '83%' },
+            '&.MuiInputBase-input': { borderRadius: '15px' },
+          }}
+        />
+        <TextField
+          {...register('email')}
+          label="Email"
+          sx={{
+            width: { xs: '100%', sm: '40%' },
+            '&.MuiInputBase-input': { borderRadius: '15px' },
+          }}
+        />
+        <TextField
+          {...register('phoneNumber')}
+          label="Phone Number"
+          required
+          sx={{
+            width: { xs: '100%', sm: '40%' },
+            '&.MuiInputBase-input': { borderRadius: '15px' },
+          }}
+        />
+        <TextField
+          {...register('contactMessage')}
+          label="Message"
+          required
+          sx={{
+            width: { xs: '100%', sm: '83%' },
+            '&.MuiInputBase-input': { borderRadius: '15px' },
+          }}
+        />
+        <Box
+          display="flex"
+          alignItems="center"
+          gap="2rem"
+          width="100%"
+          justifyContent="center"
+          margin="3rem auto"
+        >
+          <Button
+            variant="contained"
+            type="submit"
+            sx={{
+              minWidth: '15rem',
+              padding: '1rem',
+              color: 'white',
+              cursor: 'pointer',
+            }}
+          >
+            Submit
+          </Button>
+          <Button
+            variant="outlined"
+            type="reset"
+            sx={{ minWidth: '15rem', padding: '1rem', cursor: 'pointer' }}
+          >
+            Reset
+          </Button>
+        </Box>
+      </Box>
       <div className="map" style={{ margin: '5rem auto' }}>
         <iframe
           title="adf"

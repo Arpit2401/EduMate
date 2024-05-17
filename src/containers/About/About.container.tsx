@@ -1,8 +1,4 @@
-import {
-  Box,
-  Typography,
-  useMediaQuery,
-} from '@mui/material';
+import { Box, Typography, useMediaQuery } from '@mui/material';
 
 const About = () => {
   const isMobile = useMediaQuery('(max-width:768px)');
@@ -245,7 +241,7 @@ const About = () => {
           margin={{ xs: '2rem auto', md: '2rem auto 5rem' }}
           maxWidth={{ xs: '90%', lg: '1080px' }}
         >
-          At [School Name], we are committed to providing an enriching
+          At The Aryans Academy, we are committed to providing an enriching
           educational experience that prepares students for success in a rapidly
           changing world. Our school is more than just a place of learning; it's
           a vibrant community where students, parents, and educators come
@@ -263,7 +259,7 @@ const About = () => {
           extracurricular programs, we offer a myriad of opportunities for
           students to explore their interests, develop their talents, and become
           compassionate, engaged members of society. <br />
-          At [School Name], we believe that education is not just about
+          At The Aryans Academy, we believe that education is not just about
           preparing students for the future; it's about empowering them to shape
           it. Join us as we embark on a journey of discovery, growth, and
           endless possibilities.
@@ -689,27 +685,68 @@ const About = () => {
       >
         <Box
           textAlign="center"
-          maxWidth="20rem"
+          maxWidth="25rem"
           maxHeight="20rem"
           minWidth="20rem"
           minHeight="15rem"
           borderRadius="15px"
           padding="2rem"
+          display="flex"
+          alignContent="center"
           boxShadow="0px 0px 25px 5px rgba(222,222,222,0.8)"
         >
-          <Typography variant="h3" component="h3">
-            Teachers
-          </Typography>
           <Typography
-            fontSize="5rem"
             variant="h3"
             component="h3"
             color="primary.main"
+            alignSelf="center"
           >
-            50+
+            12 years of Excellence
           </Typography>
         </Box>
         <Box
+          textAlign="center"
+          maxWidth="25rem"
+          maxHeight="20rem"
+          minWidth="20rem"
+          minHeight="15rem"
+          borderRadius="15px"
+          padding="2rem"
+          display="flex"
+          alignContent="center"
+          boxShadow="0px 0px 25px 5px rgba(222,222,222,0.8)"
+        >
+          <Typography
+            variant="h3"
+            component="h3"
+            color="primary.main"
+            alignSelf="center"
+          >
+            Best classrooms, labs & libraries
+          </Typography>
+        </Box>
+        <Box
+          textAlign="center"
+          maxWidth="25rem"
+          maxHeight="20rem"
+          minWidth="20rem"
+          minHeight="15rem"
+          borderRadius="15px"
+          padding="2rem"
+          display="flex"
+          alignContent="center"
+          boxShadow="0px 0px 25px 5px rgba(222,222,222,0.8)"
+        >
+          <Typography
+            variant="h3"
+            component="h3"
+            color="primary.main"
+            alignSelf="center"
+          >
+            Vibrant student life with dynamic events
+          </Typography>
+        </Box>
+        {/* <Box
           textAlign="center"
           maxWidth="20rem"
           maxHeight="20rem"
@@ -717,64 +754,19 @@ const About = () => {
           minHeight="15rem"
           borderRadius="15px"
           padding="2rem"
+          display="flex"
+          alignContent="center"
           boxShadow="0px 0px 25px 5px rgba(222,222,222,0.8)"
         >
-          <Typography variant="h3" component="h3">
-            Students
-          </Typography>
           <Typography
-            fontSize="5rem"
             variant="h3"
             component="h3"
             color="primary.main"
+            alignSelf="center"
           >
-            500+
+            12 years of Excellence
           </Typography>
-        </Box>
-        <Box
-          textAlign="center"
-          maxWidth="20rem"
-          maxHeight="20rem"
-          minWidth="20rem"
-          minHeight="15rem"
-          borderRadius="15px"
-          padding="2rem"
-          boxShadow="0px 0px 25px 5px rgba(222,222,222,0.8)"
-        >
-          <Typography variant="h3" component="h3">
-            Standards
-          </Typography>
-          <Typography
-            fontSize="5rem"
-            variant="h3"
-            component="h3"
-            color="primary.main"
-          >
-            12
-          </Typography>
-        </Box>
-        <Box
-          textAlign="center"
-          maxWidth="20rem"
-          maxHeight="20rem"
-          minWidth="20rem"
-          minHeight="15rem"
-          borderRadius="15px"
-          padding="2rem"
-          boxShadow="0px 0px 25px 5px rgba(222,222,222,0.8)"
-        >
-          <Typography variant="h3" component="h3">
-            Alumni
-          </Typography>
-          <Typography
-            fontSize="5rem"
-            variant="h3"
-            component="h3"
-            color="primary.main"
-          >
-            1000+
-          </Typography>
-        </Box>
+        </Box> */}
       </Box>
       <Box
         maxWidth="1280px"
@@ -783,13 +775,12 @@ const About = () => {
         textAlign="center"
       >
         <Typography variant="body1" component="p">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis,
-          praesentium! Reprehenderit minima fugit error assumenda. Suscipit
-          consequuntur quisquam sequi illum quaerat, dicta nisi! Corrupti, quae
-          quo dolore saepe veritatis modi. Qui fuga recusandae dignissimos cum
-          dicta, rem fugiat. Tenetur iure aliquid quasi possimus sunt harum
-          inventore iusto. Facilis saepe adipisci magni cum laboriosam, ex eos
-          nostrum expedita maiores architecto voluptate.
+          Our school boasts modern infrastructure, equipped with
+          state-of-the-art laboratories and a well-stocked library, providing
+          students with ample resources for academic exploration. Our dedicated
+          teachers foster a nurturing learning environment, while our
+          comprehensive sports facilities encourage physical well-being and
+          teamwork, ensuring a holistic educational experience for all.
         </Typography>
       </Box>
       {/* <h1

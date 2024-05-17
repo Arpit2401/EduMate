@@ -10,11 +10,73 @@ import {
   Button,
 } from '@mui/material';
 import { useState } from 'react';
-import { useForm } from 'react-hook-form';
+import { useForm, SubmitHandler } from 'react-hook-form';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+type FormInputs = {
+  fullName: string;
+  dateOfBirth: string;
+  nationality: string;
+  gender: 'male' | 'female';
+  grade: string;
+  currentSchool: string;
+  guardianName: string;
+  relationship: string;
+  contactNumber: string;
+  email: string;
+  address: string;
+  additionalMessage: string;
+};
 
 const Admissions = () => {
-  const { register, handleSubmit } = useForm();
-  const [data, setData] = useState('');
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm<FormInputs>();
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const onSubmit: SubmitHandler<FormInputs> = (data) => {
+    setIsSubmitting(true); // Set isSubmitting to true when form submission starts
+
+    fetch(
+      'https://script.google.com/macros/s/AKfycbw8S5LmhJyS3mTFtapQycthc7_A_liWo0Tx0OHK0VDfeT7X1wQPl-1_fHge__Om3_-_/exec',
+      {
+        mode: 'no-cors',
+        redirect: 'follow',
+        method: 'POST',
+        body: JSON.stringify(data),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }
+    )
+      .then((response) => response.json())
+      .then((data) => {
+        setIsSubmitting(false);
+        console.log(data, 'Hello'); // Set isSubmitting to false after form submission completes
+
+        if (data.status === 'success') {
+          toast.success('Form submitted successfully!');
+          reset();
+          // Reset the form after successful submission
+        } else {
+          toast.error('Failed to submit form. Please try again.');
+        }
+      })
+      .catch((error) => {
+        toast.error('Failed to submit form. Please try again.');
+        setIsSubmitting(false); // Set isSubmitting to false if there is an error during form submission
+      });
+  };
+
+  const handleReset = () => {
+    console.log('Handle reset');
+    // reset('class');
+    reset(undefined); // Reset the form fields
+  };
 
   return (
     <Box>
@@ -36,9 +98,9 @@ const Admissions = () => {
             zIndex={2}
             marginTop="2rem auto"
           >
-            At [School Name], we believe in providing a nurturing environment
-            where every student can thrive academically, socially, and
-            emotionally.
+            At The Aryans Academy, we believe in providing a nurturing
+            environment where every student can thrive academically, socially,
+            and emotionally.
             {/* Our admissions process is designed to help families get
             to know our school community and to ensure that each student finds
             the right fit for their educational journey. Why Choose [School
@@ -74,7 +136,7 @@ const Admissions = () => {
           component="form"
           noValidate
           autoComplete="off"
-          onSubmit={handleSubmit((data) => setData(JSON.stringify(data)))}
+          onSubmit={handleSubmit(onSubmit)}
         >
           <Typography
             variant="h2"
@@ -93,79 +155,159 @@ const Admissions = () => {
             flexWrap="wrap"
             justifyContent="center"
           >
-            <TextField
-              {...register('fullName')}
-              required
-              id="outlined-required"
-              label="Full name"
-              sx={{
-                width: { xs: '100%', sm: '83%' },
-                '&.MuiInputBase-input': { borderRadius: '15px' },
-              }}
-            />
-            <TextField
-              {...register('dateOfBirth')}
-              label="Date of Birth"
-              required
-              sx={{
-                width: { xs: '100%', sm: '40%' },
-                '&.MuiInputBase-input': { borderRadius: '15px' },
-              }}
-            />
-            <TextField
-              {...register('nationality')}
-              label="Nationality"
-              required
-              placeholder="Indian"
-              sx={{
-                width: { xs: '100%', sm: '40%' },
-                '&.MuiInputBase-input': { borderRadius: '15px' },
-              }}
-            />
-            <TextField
-              {...register('gender')}
-              label="Gender"
-              required
-              select
-              sx={{
-                width: { xs: '100%', sm: '40%' },
-                '&.MuiInputBase-input': { borderRadius: '15px' },
-              }}
-            >
-              <MenuItem value="1">Male</MenuItem>
-              <MenuItem value="2">Female</MenuItem>
-            </TextField>
-            <TextField
-              {...register('class')}
-              label="Class applying for"
-              select
-              required
-              sx={{
-                width: { xs: '100%', sm: '40%' },
-                '&.MuiInputBase-input': { borderRadius: '15px' },
-              }}
-            >
-              <MenuItem value="1">Class 1</MenuItem>
-              <MenuItem value="2">Class 2</MenuItem>
-              <MenuItem value="3">Class 3</MenuItem>
-              <MenuItem value="4">Class 4</MenuItem>
-              <MenuItem value="5">Class 5</MenuItem>
-              <MenuItem value="6">Class 6</MenuItem>
-              <MenuItem value="7">Class 7</MenuItem>
-              <MenuItem value="8">Class 8</MenuItem>
-              <MenuItem value="9">Class 9</MenuItem>
-              <MenuItem value="10">Class 10</MenuItem>
-              <MenuItem value="11">Class 11</MenuItem>
-              <MenuItem value="12">Class 12</MenuItem>
-            </TextField>
-            <TextField
-              {...register('currentSchool')}
-              label="Current School"
-              sx={{
-                width: { xs: '100%', sm: '83%' },
-                '&.MuiInputBase-input': { borderRadius: '15px' },
-              }}
-            />
+            <Box width={{ xs: '100%', sm: '83%' }}>
+              <TextField
+                {...register('fullName', {
+                  required: true,
+                  minLength: 2,
+                  maxLength: 50,
+                })}
+                required
+                id="outlined-required"
+                label="Full name"
+                sx={{
+                  width: '100%',
+                  '&.MuiInputBase-input': { borderRadius: '15px' },
+                }}
+              />
+              {errors.fullName && errors.fullName.type === 'required' && (
+                <span className="error">Full name is required</span>
+              )}
+              {errors.fullName && errors.fullName.type === 'minLength' && (
+                <span className="error">
+                  Full name must be at least 2 characters
+                </span>
+              )}
+              {errors.fullName && errors.fullName.type === 'maxLength' && (
+                <span className="error">
+                  Full name cannot exceed 50 characters
+                </span>
+              )}
+            </Box>
+            <Box width={{ xs: '100%', sm: '40%' }}>
+              <TextField
+                {...register('dateOfBirth', { required: true })}
+                type="date"
+                label="Date of Birth"
+                InputLabelProps={{
+                  shrink: true,
+                }}
+                required
+                sx={{
+                  width: '100%',
+                  '&.MuiInputBase-input': { borderRadius: '15px' },
+                }}
+              />
+              {errors.dateOfBirth && (
+                <span className="error">Date of birth is required</span>
+              )}
+            </Box>
+            <Box width={{ xs: '100%', sm: '40%' }}>
+              <TextField
+                {...register('nationality', {
+                  required: true,
+                  minLength: 2,
+                  maxLength: 50,
+                })}
+                label="Nationality"
+                required
+                placeholder="Indian"
+                sx={{
+                  width: '100%',
+                  '&.MuiInputBase-input': { borderRadius: '15px' },
+                }}
+              />
+              {errors.nationality && errors.nationality.type === 'required' && (
+                <span className="error">Nationality is required</span>
+              )}
+              {errors.nationality &&
+                errors.nationality.type === 'minLength' && (
+                <span className="error">
+                    Nationality must be at least 2 characters
+                </span>
+              )}
+              {errors.nationality &&
+                errors.nationality.type === 'maxLength' && (
+                <span className="error">
+                    Nationality cannot exceed 50 characters
+                </span>
+              )}
+            </Box>
+            <Box width={{ xs: '100%', sm: '40%' }}>
+              <TextField
+                {...register('gender')}
+                label="Gender"
+                select
+                sx={{
+                  width: '100%',
+                  '&.MuiInputBase-input': { borderRadius: '15px' },
+                }}
+              >
+                <MenuItem value="male">Male</MenuItem>
+                <MenuItem value="female">Female</MenuItem>
+              </TextField>
+              {errors.gender && (
+                <span className="error">Gender is required</span>
+              )}
+            </Box>
+            <Box width={{ xs: '100%', sm: '40%' }}>
+              <TextField
+                label="Class applying for"
+                select
+                {...register('grade')}
+                required
+                sx={{
+                  width: '100%',
+                  '&.MuiInputBase-input': { borderRadius: '15px' },
+                }}
+              >
+                <MenuItem value="1">Class 1</MenuItem>
+                <MenuItem value="2">Class 2</MenuItem>
+                <MenuItem value="3">Class 3</MenuItem>
+                <MenuItem value="4">Class 4</MenuItem>
+                <MenuItem value="5">Class 5</MenuItem>
+                <MenuItem value="6">Class 6</MenuItem>
+                <MenuItem value="7">Class 7</MenuItem>
+                <MenuItem value="8">Class 8</MenuItem>
+                <MenuItem value="9">Class 9</MenuItem>
+                <MenuItem value="10">Class 10</MenuItem>
+                <MenuItem value="11">Class 11</MenuItem>
+                <MenuItem value="12">Class 12</MenuItem>
+              </TextField>
+              {errors.grade && errors.grade.type === 'required' && (
+                <span className="error">Class is required</span>
+              )}
+            </Box>
+            <Box width={{ xs: '100%', sm: '83%' }}>
+              <TextField
+                {...register('currentSchool', {
+                  required: true,
+                  minLength: 2,
+                  maxLength: 75,
+                })}
+                label="Current School"
+                sx={{
+                  width: '100%',
+                  '&.MuiInputBase-input': { borderRadius: '15px' },
+                }}
+              />
+              {errors.currentSchool &&
+                errors.currentSchool.type === 'required' && (
+                <span className="error">Current school is required</span>
+              )}
+              {errors.currentSchool &&
+                errors.currentSchool.type === 'minLength' && (
+                <span className="error">
+                    Current school must be at least 2 characters
+                </span>
+              )}
+              {errors.currentSchool &&
+                errors.currentSchool.type === 'maxLength' && (
+                <span className="error">
+                    Current school cannot exceed 75 characters
+                </span>
+              )}
+            </Box>
           </Box>
           <Typography
             variant="h2"
@@ -184,59 +326,180 @@ const Admissions = () => {
             flexWrap="wrap"
             justifyContent="center"
           >
-            <TextField
-              {...register('guardianName')}
-              required
-              id="outlined-required"
-              label="Full name"
-              sx={{
-                width: { xs: '100%', sm: '83%' },
-                '&.MuiInputBase-input': { borderRadius: '15px' },
-              }}
-            />
-            <TextField
-              {...register('relationship')}
-              label="Relationship with Student"
-              required
-              placeholder="Father/Mother/etc."
-              sx={{
-                width: { xs: '100%', sm: '40%' },
-                '&.MuiInputBase-input': { borderRadius: '15px' },
-              }}
-            />
-            <TextField
-              {...register('contactNumber')}
-              label="Contact Number"
-              required
-              sx={{
-                width: { xs: '100%', sm: '40%' },
-                '&.MuiInputBase-input': { borderRadius: '15px' },
-              }}
-            />
-            <TextField
-              {...register('email')}
-              label="Email Address"
-              sx={{
-                width: { xs: '100%', sm: '40%' },
-                '&.MuiInputBase-input': { borderRadius: '15px' },
-              }}
-            />
-            <TextField
-              {...register('address')}
-              label="Address"
-              sx={{
-                width: { xs: '100%', sm: '40%' },
-                '&.MuiInputBase-input': { borderRadius: '15px' },
-              }}
-            />
-            <TextField
-              {...register('aboutYou')}
-              label="Additional Message"
-              sx={{
-                width: { xs: '100%', sm: '83%' },
-                '&.MuiInputBase-input': { borderRadius: '15px' },
-              }}
-            />
+            <Box width={{ xs: '100%', sm: '83%' }}>
+              <TextField
+                {...register('guardianName', {
+                  required: true,
+                  minLength: 2,
+                  maxLength: 50,
+                })}
+                required
+                id="outlined-required"
+                label="Full name"
+                sx={{
+                  width: '100%',
+                  '&.MuiInputBase-input': { borderRadius: '15px' },
+                }}
+              />
+              {errors.guardianName &&
+                errors.guardianName.type === 'required' && (
+                <span className="error">Guardian name is required</span>
+              )}
+              {errors.guardianName &&
+                errors.guardianName.type === 'minLength' && (
+                <span className="error">
+                    Guardian name must be at least 2 characters
+                </span>
+              )}
+              {errors.guardianName &&
+                errors.guardianName.type === 'maxLength' && (
+                <span className="error">
+                    Guardian name cannot exceed 50 characters
+                </span>
+              )}
+            </Box>
+            <Box width={{ xs: '100%', sm: '40%' }}>
+              <TextField
+                {...register('relationship', {
+                  required: true,
+                  minLength: 2,
+                  maxLength: 50,
+                })}
+                label="Relationship with Student"
+                required
+                placeholder="Father/Mother/etc."
+                sx={{
+                  width: '100%',
+                  '&.MuiInputBase-input': { borderRadius: '15px' },
+                }}
+              />
+              {errors.relationship &&
+                errors.relationship.type === 'required' && (
+                <span className="error">Relationship is required</span>
+              )}
+              {errors.relationship &&
+                errors.relationship.type === 'minLength' && (
+                <span className="error">
+                    Relationship must be at least 2 characters
+                </span>
+              )}
+              {errors.relationship &&
+                errors.relationship.type === 'maxLength' && (
+                <span className="error">
+                    Relationship cannot exceed 50 characters
+                </span>
+              )}
+            </Box>
+            <Box width={{ xs: '100%', sm: '40%' }}>
+              <TextField
+                {...register('contactNumber', {
+                  required: true,
+                  pattern: /^[0-9]{10}$/,
+                  minLength: 10,
+                  maxLength: 10,
+                })}
+                label="Contact Number"
+                required
+                sx={{
+                  width: '100%',
+                  '&.MuiInputBase-input': { borderRadius: '15px' },
+                }}
+              />
+              {errors.contactNumber &&
+                errors.contactNumber.type === 'required' && (
+                <span className="error">Contact number is required</span>
+              )}
+              {errors.contactNumber &&
+                errors.contactNumber.type === 'pattern' && (
+                <span className="error">
+                    Please enter a valid 10-digit contact number
+                </span>
+              )}
+              {errors.contactNumber &&
+                errors.contactNumber.type === 'minLength' && (
+                <span className="error">
+                    Contact number must be exactly 10 digits
+                </span>
+              )}
+              {errors.contactNumber &&
+                errors.contactNumber.type === 'maxLength' && (
+                <span className="error">
+                    Contact number must be exactly 10 digits
+                </span>
+              )}
+            </Box>
+            <Box width={{ xs: '100%', sm: '40%' }}>
+              <TextField
+                {...register('email', {
+                  required: true,
+                  pattern: /^\S+@\S+$/i,
+                  minLength: 5,
+                  maxLength: 100,
+                })}
+                label="Email Address"
+                sx={{
+                  width: '100%',
+                  '&.MuiInputBase-input': { borderRadius: '15px' },
+                }}
+              />
+              {errors.email && errors.email.type === 'required' && (
+                <span className="error">Email is required</span>
+              )}
+              {errors.email && errors.email.type === 'pattern' && (
+                <span className="error">Invalid email format</span>
+              )}
+              {errors.email && errors.email.type === 'minLength' && (
+                <span className="error">
+                  Email must be at least 5 characters
+                </span>
+              )}
+              {errors.email && errors.email.type === 'maxLength' && (
+                <span className="error">Email cannot exceed 50 characters</span>
+              )}
+            </Box>
+            <Box width={{ xs: '100%', sm: '40%' }}>
+              <TextField
+                {...register('address', {
+                  required: true,
+                  minLength: 5,
+                  maxLength: 150,
+                })}
+                label="Address"
+                sx={{
+                  width: '100%',
+                  '&.MuiInputBase-input': { borderRadius: '15px' },
+                }}
+              />
+              {errors.address && errors.address.type === 'required' && (
+                <span className="error">Address is required</span>
+              )}
+              {errors.address && errors.address.type === 'minLength' && (
+                <span className="error">
+                  Address must be at least 5 characters
+                </span>
+              )}
+              {errors.address && errors.address.type === 'maxLength' && (
+                <span className="error">
+                  Address cannot exceed 100 characters
+                </span>
+              )}
+            </Box>
+            <Box width={{ xs: '100%', sm: '83%' }}>
+              <TextField
+                {...register('additionalMessage', { maxLength: 500 })}
+                label="Additional Message"
+                sx={{
+                  width: '100%',
+                  '&.MuiInputBase-input': { borderRadius: '15px' },
+                }}
+              />
+              {errors.additionalMessage &&
+                errors.additionalMessage.type === 'maxLength' && (
+                <span className="error">
+                    Additional message cannot exceed 500 characters
+                </span>
+              )}
+            </Box>
           </Box>
           <Box
             display="flex"
@@ -261,6 +524,7 @@ const Admissions = () => {
             <Button
               variant="outlined"
               type="reset"
+              onClick={handleReset}
               sx={{ minWidth: '15rem', padding: '1rem', cursor: 'pointer' }}
             >
               Reset
@@ -303,20 +567,6 @@ const Admissions = () => {
               id="panel2-header"
             >
               Accordion 2
-            </AccordionSummary>
-            <AccordionDetails>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-              Suspendisse malesuada lacus ex, sit amet blandit leo lobortis
-              eget.
-            </AccordionDetails>
-          </Accordion>
-          <Accordion defaultExpanded>
-            <AccordionSummary
-              expandIcon={<ExpandMore />}
-              aria-controls="panel3-content"
-              id="panel3-header"
-            >
-              Accordion Actions
             </AccordionSummary>
             <AccordionDetails>
               Lorem ipsum dolor sit amet, consectetur adipiscing elit.

@@ -16,6 +16,7 @@ import {
   Typography,
   useMediaQuery,
 } from '@mui/material';
+import CloseIcon from '@mui/icons-material/Close';
 import {
   FacebookOutlined,
   Instagram,
@@ -64,7 +65,7 @@ const MainLayout: React.FunctionComponent = (): JSX.Element => {
     const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
     const toggleDrawer = () => {
-      setIsDrawerOpen(!isDrawerOpen);
+      setIsDrawerOpen((prev) => !prev);
     };
 
     return (
@@ -93,16 +94,30 @@ const MainLayout: React.FunctionComponent = (): JSX.Element => {
             alignItems="center"
             borderBottom="2px solid #eae5e5"
           >
-            <Link href="/" width="14rem" height="8rem" mb="1rem">
-              <Box
-                component="img"
-                src={logo}
-                alt="Logo"
-                width="100%"
-                height="100%"
-                sx={{ cursor: 'pointer' }}
-              />
-            </Link>
+            <Box height="8rem">
+              <Link href="/" width="14rem" height="8rem">
+                <Box
+                  component="img"
+                  src={logo}
+                  alt="Logo"
+                  width="100%"
+                  height="100%"
+                  sx={{ cursor: 'pointer' }}
+                />
+              </Link>
+              <IconButton
+                aria-label="close"
+                onClick={toggleDrawer}
+                sx={{
+                  position: 'absolute',
+                  right: 8,
+                  top: 8,
+                  color: (theme) => theme.palette.grey[700],
+                }}
+              >
+                <CloseIcon />
+              </IconButton>
+            </Box>
             {/* TODO: Use react router dom link and add active state*/}
             {pages.map((page) => (
               <Link
