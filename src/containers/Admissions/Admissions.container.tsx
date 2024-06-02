@@ -42,14 +42,15 @@ const Admissions = () => {
     setIsSubmitting(true); // Set isSubmitting to true when form submission starts
 
     fetch(
-      'https://script.google.com/macros/s/AKfycbw8S5LmhJyS3mTFtapQycthc7_A_liWo0Tx0OHK0VDfeT7X1wQPl-1_fHge__Om3_-_/exec',
+      'https://script.google.com/macros/s/AKfycbyc5E9enHug7EIwLkHo4HDTPbXRlu0onWGAoL-dGDpu7ZWYYY6m1gzZi8uEE_6Z7556/exec',
       {
         mode: 'no-cors',
-        redirect: 'follow',
+        // redirect: 'follow',
         method: 'POST',
         body: JSON.stringify(data),
         headers: {
           'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*',
         },
       }
     )
