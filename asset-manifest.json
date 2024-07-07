@@ -1,22 +1,22 @@
 {
   "files": {
-    "main.css": "/static/css/main.84addab4.css",
-    "main.js": "/static/js/main.e981056f.js",
-    "static/media/aks1.png": "/static/media/aks1.554945fff4346d88637a.png",
-    "static/media/80G-2.jpeg": "/static/media/80G-2.b4c548cd4ba39db1385b.jpeg",
-    "static/media/12AA.jpeg": "/static/media/12AA.347e1c6bcda3c653dbe6.jpeg",
-    "static/media/80G-1.jpeg": "/static/media/80G-1.af1733db231759399c30.jpeg",
-    "static/media/Inter-Bold.woff2": "/static/media/Inter-Bold.eccbcfa9bc0203198ac6.woff2",
-    "static/media/Inter-SemiBold.woff2": "/static/media/Inter-SemiBold.b8111f0df49a14ef7f60.woff2",
-    "static/media/Inter-Medium.woff2": "/static/media/Inter-Medium.8a50feca5194fae5cc45.woff2",
-    "static/media/Inter-Light.woff2": "/static/media/Inter-Light.e111da916ded1fb7774d.woff2",
-    "static/media/Inter-Regular.woff2": "/static/media/Inter-Regular.6fcad65b7a8f7ffabb8e.woff2",
-    "index.html": "/index.html",
-    "main.84addab4.css.map": "/static/css/main.84addab4.css.map",
-    "main.e981056f.js.map": "/static/js/main.e981056f.js.map"
+    "main.css": "/thearyansacademy.in/static/css/main.84addab4.css",
+    "main.js": "/thearyansacademy.in/static/js/main.bb0a1791.js",
+    "static/media/aks1.png": "/thearyansacademy.in/static/media/aks1.554945fff4346d88637a.png",
+    "static/media/80G-2.jpeg": "/thearyansacademy.in/static/media/80G-2.b4c548cd4ba39db1385b.jpeg",
+    "static/media/12AA.jpeg": "/thearyansacademy.in/static/media/12AA.347e1c6bcda3c653dbe6.jpeg",
+    "static/media/80G-1.jpeg": "/thearyansacademy.in/static/media/80G-1.af1733db231759399c30.jpeg",
+    "static/media/Inter-Bold.woff2": "/thearyansacademy.in/static/media/Inter-Bold.eccbcfa9bc0203198ac6.woff2",
+    "static/media/Inter-SemiBold.woff2": "/thearyansacademy.in/static/media/Inter-SemiBold.b8111f0df49a14ef7f60.woff2",
+    "static/media/Inter-Medium.woff2": "/thearyansacademy.in/static/media/Inter-Medium.8a50feca5194fae5cc45.woff2",
+    "static/media/Inter-Light.woff2": "/thearyansacademy.in/static/media/Inter-Light.e111da916ded1fb7774d.woff2",
+    "static/media/Inter-Regular.woff2": "/thearyansacademy.in/static/media/Inter-Regular.6fcad65b7a8f7ffabb8e.woff2",
+    "index.html": "/thearyansacademy.in/index.html",
+    "main.84addab4.css.map": "/thearyansacademy.in/static/css/main.84addab4.css.map",
+    "main.bb0a1791.js.map": "/thearyansacademy.in/static/js/main.bb0a1791.js.map"
   },
   "entrypoints": [
     "static/css/main.84addab4.css",
-    "static/js/main.e981056f.js"
+    "static/js/main.bb0a1791.js"
   ]
 }
