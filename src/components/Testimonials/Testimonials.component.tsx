@@ -5,6 +5,7 @@ import {
   Box,
   useMediaQuery,
 } from '@mui/material';
+import { useLoader } from 'components/FullPageLoader/FullPageLoader.provider';
 import React, { useState, useEffect } from 'react';
 import { Autoplay, Navigation, Pagination } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -18,16 +19,21 @@ interface Testimonial {
 const Testimonials: React.FC = () => {
   const isMobile = useMediaQuery('(max-width:768px)');
   const [testimonials, setTestimonials] = useState<Testimonial[]>([]);
+  const { setLoading } = useLoader();
 
   useEffect(() => {
+    setLoading(true);
     fetch(
-      'https://script.google.com/macros/s/AKfycbwqli4HRRPVOdi1FYMsjXrOfjliU2_MJ4vjrHEvgtztufUvSOz4x8TeaGuu9XKJxZMb/exec?section=testimonials'
+      'https://script.google.com/macros/s/AKfycbyrd5RehdeS1rfdLoTJjC4g0fTMwcg4EFSiMzj_f5goIun8SowJoHTGolY_qu3wqHDd/exec?section=testimonials'
     )
       .then((response) => response.json())
       .then((data) => {
         setTestimonials(data.data);
+        setLoading(false);
       })
-      .catch(() => {});
+      .catch(() => {
+        setLoading(false);
+      });
   }, []);
 
   return testimonials.length > 0 ? (
@@ -63,20 +69,22 @@ const Testimonials: React.FC = () => {
         className="mySwiper"
       >
         {testimonials.map((testimonial, index) => (
-          <SwiperSlide>
-            <Box minHeight="18rem" marginTop="2rem" key={index}>
-              <Card sx={{ borderRadius: '15px' }}>
-                <CardContent>
-                  <Typography variant="body1" gutterBottom>
-                    "{testimonial.text}"
-                  </Typography>
-                  <Typography variant="body2" color="textSecondary">
-                    - {testimonial.name} ({testimonial.profile})
-                  </Typography>
-                </CardContent>
-              </Card>
-            </Box>
-          </SwiperSlide>
+          <Box maxWidth={isMobile ? '100%': '33%'}>
+            <SwiperSlide>
+              <Box minHeight="18rem" marginTop="2rem" key={index}>
+                <Card sx={{ borderRadius: '15px' }}>
+                  <CardContent>
+                    <Typography variant="body1" gutterBottom>
+                      "{testimonial.text}"
+                    </Typography>
+                    <Typography variant="body2" color="textSecondary">
+                      - {testimonial.name} ({testimonial.profile})
+                    </Typography>
+                  </CardContent>
+                </Card>
+              </Box>
+            </SwiperSlide>
+          </Box>
         ))}
       </Swiper>
     </Box>

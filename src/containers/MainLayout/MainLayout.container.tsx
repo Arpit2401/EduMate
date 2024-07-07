@@ -24,7 +24,7 @@ import {
   Twitter,
 } from '@mui/icons-material';
 import { routeLink } from '@constants';
-import logo from '../../assets/aks1.png';
+import logo from '../../assets/images/aks1.png';
 // Elipses at menu item
 // max width for top menu
 

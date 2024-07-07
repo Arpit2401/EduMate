@@ -1,7 +1,7 @@
 import { FacebookOutlined, Instagram, Twitter } from '@mui/icons-material';
 import { Box, Link, Typography } from '@mui/material';
 
-import logo from '../../assets/aks1.png';
+import logo from '../../assets/images/aks1.png';
 import { routeLink } from '@constants';
 import { useLocation } from 'react-router-dom';
 

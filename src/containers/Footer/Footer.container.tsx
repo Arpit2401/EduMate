@@ -4,7 +4,7 @@ import { FooterProps } from './Footer.types';
 import { routeLink } from '@constants';
 import { useLocation } from 'react-router-dom';
 
-import logo from '../../assets/aks1.png';
+import logo from '../../assets/images/aks1.png';
 import { useState } from 'react';
 import DocumentViewerModal from 'components/DocumentViewerModal/DocumentViewerModa.component';
 
@@ -25,6 +25,8 @@ const Footer: React.FC<FooterProps> = ({ address, contactDetails }) => {
   };
 
   const [openModal, setOpenModal] = useState(false);
+  const [documentTitle, setDocumentTitle] = useState('');
+  const [type, setType] = useState<'12AA'|'80G'>('80G');
 
   return (
     <>
@@ -32,11 +34,8 @@ const Footer: React.FC<FooterProps> = ({ address, contactDetails }) => {
         <DocumentViewerModal
           isOpen={openModal}
           handleClose={() => setOpenModal(false)}
-          documentTitle="Brochure"
-          // documentImages={[
-          //   'https://thearyansacademy.in/images/80G-1.jpeg',
-          //   'https://thearyansacademy.in/images/80G-2.jpeg',
-          // ]}
+          documentTitle={documentTitle}
+          type={type}
         />
       )}
       <footer
@@ -107,7 +106,11 @@ const Footer: React.FC<FooterProps> = ({ address, contactDetails }) => {
                 Documents
               </Typography>
               <Link
-                onClick={() => setOpenModal(true)}
+                onClick={() => {
+                  setOpenModal(true);
+                  setDocumentTitle('Form 80G');
+                  setType('80G');
+                }}
                 sx={{
                   textDecoration: 'none',
                   color: 'black',
@@ -127,10 +130,15 @@ const Footer: React.FC<FooterProps> = ({ address, contactDetails }) => {
                     },
                   }}
                 >
-                  Brochure
+                  Form 80G
                 </Typography>
               </Link>
               <Link
+                onClick={() => {
+                  setOpenModal(true);
+                  setDocumentTitle('Form 12AA');
+                  setType('12AA');
+                }}
                 sx={{
                   textDecoration: 'none',
                   color: 'black',
@@ -150,7 +158,7 @@ const Footer: React.FC<FooterProps> = ({ address, contactDetails }) => {
                     },
                   }}
                 >
-                  Annual Report
+                  Form 12AA
                 </Typography>
               </Link>
             </Box>

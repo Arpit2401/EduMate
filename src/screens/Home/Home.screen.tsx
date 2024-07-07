@@ -17,18 +17,22 @@ import 'swiper/css';
 import 'swiper/css/pagination';
 
 import '../../App.css';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import Testimonials from 'components/Testimonials/Testimonials.component';
 import NoticeBoard from 'components/NoticeBoard/NoticeBoard.component';
+import { useLoader } from 'components/FullPageLoader/FullPageLoader.provider';
 
 const App = () => {
   const isMobile = useMediaQuery('(max-width:768px)');
 
   interface Event {
-    title: string;
-    subtext: string;
-    image: string;
+    eventName: string;
+    eventSlogan: string;
+    eventBanner: string;
+    eventDate: string;
+    eventTime: string;
+    eventDescription: string;
   }
 
   interface EventCardProps {
@@ -47,13 +51,15 @@ const App = () => {
         flexDirection={{ xs: 'column', md: 'row' }}
         gap="2rem"
         paddingRight={{ xs: 0, md: '2rem' }}
+        paddingBottom="2rem"
         boxShadow="0px 0px 25px 5px rgba(222,222,222,0.8)"
       >
         <Box
           component="img"
-          src="https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60"
-          alt="sdf"
-          width={{ sx: '100%', md: '35%' }}
+          src={`
+            ${event.eventBanner}`}
+          alt={event.eventName}
+          minWidth={{ sx: '100%', md: '35%' }}
           height="100%"
           sx={{
             borderTopLeftRadius: '15px',
@@ -75,10 +81,10 @@ const App = () => {
               color="primary.main"
               paddingTop={{ xs: 0, md: '2rem' }}
             >
-              Name of the Event
+              {event.eventName}
             </Typography>
             <Typography variant="body1" component="p" fontStyle="italic">
-              "Slogan of the Event"
+              "{event.eventSlogan}"
             </Typography>
           </Box>
           <Typography
@@ -87,12 +93,12 @@ const App = () => {
             margin="1rem 0"
             textAlign="justify"
           >
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Error,
-            nulla autem voluptas et deserunt.
+            {event.eventDescription}
           </Typography>
           <Box
             display="flex"
             justifyContent="space-between"
+            paddingTop={{ xs: '1rem', md: '2rem' }}
             width="100%"
             gap={{ xs: '1rem', md: 0 }}
             flexDirection={{ xs: 'column', md: 'row' }}
@@ -102,13 +108,13 @@ const App = () => {
               <CalendarMonth
                 sx={{ verticalAlign: 'text-bottom', marginRight: '.5rem' }}
               />
-              18th Feb. 2024
+              {event.eventDate}
             </Typography>
             <Typography>
               <LockClockOutlined
                 sx={{ verticalAlign: 'text-bottom', marginRight: '.5rem' }}
               />
-              8:30 AM - 2:45 PM
+              {event.eventTime}
             </Typography>
           </Box>
           {/* <Button
@@ -129,10 +135,10 @@ const App = () => {
   };
 
   interface EventSliderProps {
-    events: Event[];
+    eventsData: Event[];
   }
 
-  const EventSlider: React.FC<EventSliderProps> = ({ events }) => {
+  const EventSlider: React.FC<EventSliderProps> = ({ eventsData }) => {
     return (
       <Box
         display="flex"
@@ -142,26 +148,30 @@ const App = () => {
         justifyContent="space-evenly"
         width="100%"
       >
-        {events.map((event, index) => (
+        {eventsData.map((event, index) => (
           <EventCard key={index} event={event} />
         ))}
       </Box>
     );
   };
 
-  const events = [
-    {
-      title: 'Event 1',
-      subtext: 'A small subtext for Event 1',
-      image: 'https://via.placeholder.com/600x200',
-    },
-    {
-      title: 'Event 2',
-      subtext: 'A small subtext for Event 2',
-      image: 'https://via.placeholder.com/600x200',
-    },
-    // Add more events as needed
-  ];
+  const [events, setEvents] = useState<Event[]>([]);
+  const { setLoading } = useLoader();
+
+  useEffect(() => {
+    setLoading(true);
+    fetch(
+      'https://script.google.com/macros/s/AKfycby3Knpxcpy1UmGr-6BoM0iUhatMQnR-J4v4yNhgeQ6OopvOQ6xsUzSX0tM1qj1UcnDL/exec?section=events'
+    )
+      .then((response) => response.json())
+      .then((data) => {
+        setEvents(data.data);
+        setLoading(false);
+      })
+      .catch(() => { 
+        setLoading(false);
+      });
+  }, []);
 
   return (
     <Box>
@@ -810,6 +820,7 @@ const App = () => {
           </Swiper>
         </Box>
       </Box>
+      {events.length > 0 && 
       <Box
         maxWidth="1280px"
         margin={{ xs: '10rem 2rem', md: '10rem auto' }}
@@ -826,7 +837,7 @@ const App = () => {
         >
           Recent Events
         </Typography>
-        <EventSlider events={events} />
+        <EventSlider eventsData={events} />
         {/* <Button
           href="/events"
           variant="contained"
@@ -839,7 +850,7 @@ const App = () => {
         >
           View More
         </Button> */}
-      </Box>{' '}
+      </Box>}
       <Box
         minHeight="30rem"
         margin="10rem 0"

@@ -1,206 +1,12 @@
 import { Box, Typography, useMediaQuery } from '@mui/material';
+import { useLoader } from 'components/FullPageLoader/FullPageLoader.provider';
+import { useEffect } from 'react';
 
 const About = () => {
   const isMobile = useMediaQuery('(max-width:768px)');
-  // const eventsteam = [
-  //   {
-  //     title: 'Event 1',
-  //     subtext: 'A small subtext for Event 1',
-  //     image: 'https://via.placeholder.com/200x200',
-  //   },
-  //   {
-  //     title: 'Event 2',
-  //     subtext: 'A small subtext for Event 2',
-  //     image: 'https://via.placeholder.com/200x200',
-  //   },
-  //   {
-  //     title: 'Event 3',
-  //     subtext: 'A small subtext for Event 2',
-  //     image: 'https://via.placeholder.com/200x200',
-  //   },
-  //   {
-  //     title: 'Event 4',
-  //     subtext: 'A small subtext for Event 2',
-  //     image: 'https://via.placeholder.com/200x200',
-  //   },
-  //   {
-  //     title: 'Event 4',
-  //     subtext: 'A small subtext for Event 2',
-  //     image: 'https://via.placeholder.com/200x200',
-  //   },
-  //   {
-  //     title: 'Event 4',
-  //     subtext: 'A small subtext for Event 2',
-  //     image: 'https://via.placeholder.com/200x200',
-  //   },
-  //   {
-  //     title: 'Event 4',
-  //     subtext: 'A small subtext for Event 2',
-  //     image: 'https://via.placeholder.com/200x200',
-  //   },
-  //   {
-  //     title: 'Event 4',
-  //     subtext: 'A small subtext for Event 2',
-  //     image: 'https://via.placeholder.com/200x200',
-  //   },
-  //   {
-  //     title: 'Event 4',
-  //     subtext: 'A small subtext for Event 2',
-  //     image: 'https://via.placeholder.com/200x200',
-  //   },
-  //   {
-  //     title: 'Event 4',
-  //     subtext: 'A small subtext for Event 2',
-  //     image: 'https://via.placeholder.com/200x200',
-  //   },
-  //   // Add more events as needed
-  // ];
+  const {setLoading} = useLoader();
 
-  // interface Event {
-  //   title: string;
-  //   subtext: string;
-  //   image: string;
-  // }
-
-  // interface EventCardProps {
-  //   event: Event;
-  // }
-
-  // const EventCard: React.FC<EventCardProps> = ({ event }) => {
-  //   return (
-  //     <Card>
-  //       <img
-  //         src={event.image}
-  //         alt={event.title}
-  //         style={{ width: '100%', height: '200px', objectFit: 'cover' }}
-  //       />
-  //       <CardContent>
-  //         <Typography variant="h6">{event.title}</Typography>
-  //         <Typography variant="body2" color="textSecondary">
-  //           {event.subtext}
-  //         </Typography>
-  //         <Button
-  //           variant="contained"
-  //           color="primary"
-  //           onClick={() => alert(`Check out more details of ${event.title}`)}
-  //         >
-  //           View Details
-  //         </Button>
-  //       </CardContent>
-  //     </Card>
-  //   );
-  // };
-
-  // const [teachersData, setTeachersData] = useState<
-  //   {
-  //     name: string;
-  //     position: string;
-  //     photo: string;
-  //     details: string;
-  //   }[]
-  // >([]);
-  // const TeacherList = () => {
-  //   const [open, setOpen] = useState(false);
-  //   const [selectedTeacher, setSelectedTeacher] = useState({
-  //     name: '',
-  //     position: '',
-  //     photo: '',
-  //     details: '',
-  //   });
-
-  //   const handleOpen = (teacher: any) => {
-  //     setSelectedTeacher(teacher);
-  //     setOpen(true);
-  //   };
-
-  //   const handleClose = () => {
-  //     setOpen(false);
-  //   };
-
-  //   console.log(teachersData[0], 'hello');
-
-  //   // fetch('https://drive.google.com/uc?id=1mzg9CxWptRf09_hdcmTMPLGNd8dP8ZBF')
-  //   //   .then((response) => response.blob())
-  //   //   .then((blob) => {
-  //   //     var objectURL = URL.createObjectURL(blob);
-  //   //     var img = document.createElement('img');
-  //   //     img.src = objectURL;
-  //   //     document.body.appendChild(img);
-  //   //   })
-  //   //   .catch((error) => console.error('Error fetching image:', error));
-
-  //   return (
-  //     <div className="rootTest">
-  //       {teachersData.map((teacher, index) => {
-  //         // const response = await fetch(
-  //         //   `https://www.googleapis.com/drive/v3/files/${driveId}?alt=media`,
-  //         //   {
-  //         //     headers: {
-  //         //       Authorization: `Bearer ${YOUR_ACCESS_TOKEN}`,
-  //         //       'Access-Control-Allow-Origin': '*', // Allow requests from any origin (not recommended for production)
-  //         //     },
-  //         //   }
-  //         // );
-
-  //         return (
-  //           <Avatar
-  //             key={index}
-  //             alt={teacher.name}
-  //             // src="http://drive.google.com/uc?export=download&id=1mzg9CxWptRf09_hdcmTMPLGNd8dP8ZBF"
-  //             className="avatarTest"
-  //             src="https://drive.google.com/uc?id=1W--mKfUyUwtZE-e5vIez-KusRbIoiwFi"
-  //             // src={teacher.photo}
-  //             onClick={() => handleOpen(teacher)}
-  //           />
-  //         );
-  //       })}
-  //       <Modal
-  //         className="modalTest"
-  //         open={open}
-  //         onClose={handleClose}
-  //         closeAfterTransition
-  //         BackdropComponent={Backdrop}
-  //         BackdropProps={{
-  //           timeout: 500,
-  //         }}
-  //       >
-  //         <Fade in={open}>
-  //           <div className="paperTest">
-  //             <Avatar
-  //               alt={selectedTeacher?.name}
-  //               src="https://drive.google.com/file/d/1c1i3WDRfJxU7JSX_EYeSKBUC5eESrUSe/view?usp=sharing"
-  //             />
-  //             <Typography variant="h6">{selectedTeacher?.name}</Typography>
-  //             <Typography variant="subtitle1">
-  //               {selectedTeacher?.position}
-  //             </Typography>
-  //             <Typography variant="body1">
-  //               {selectedTeacher?.details}
-  //             </Typography>
-  //           </div>
-  //         </Fade>
-  //       </Modal>
-  //     </div>
-  //   );
-  // };
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       const response = await fetch(
-  //         'https://script.google.com/macros/s/AKfycbzxxUDisi3dBugnaVIhJI0ndzVqbVyCHASOEgBbV-G9Dts13L_1Kpz7foHwVrH7CArI/exec'
-  //       );
-  //       if (!response.ok) {
-  //         throw new Error('Network response was not ok');
-  //       }
-  //       const data = await response.json();
-  //       setTeachersData(data);
-  //     } catch (error) {
-  //       console.error('Error fetching data:', error);
-  //     }
-  //   };
-
-  //   fetchData();
-  // }, []);
+  useEffect(() => setLoading(false), []);
 
   return (
     <Box>
@@ -249,7 +55,7 @@ const About = () => {
           learning. With a focus on academic excellence, character development,
           and social responsibility, we strive to cultivate well-rounded
           individuals who are equipped with the skills, knowledge, and values
-          needed to thrive in the 21st century. <br />
+          needed to thrive in the 21st century. <br /><br />
           Our dedicated team of educators fosters a supportive and inclusive
           environment where every student feels valued, challenged, and
           empowered to reach their full potential. Through personalized
@@ -258,7 +64,7 @@ const About = () => {
           creativity. From our state-of-the-art facilities to our comprehensive
           extracurricular programs, we offer a myriad of opportunities for
           students to explore their interests, develop their talents, and become
-          compassionate, engaged members of society. <br />
+          compassionate, engaged members of society. <br /><br />
           At The Aryans Academy, we believe that education is not just about
           preparing students for the future; it's about empowering them to shape
           it. Join us as we embark on a journey of discovery, growth, and

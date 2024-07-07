@@ -9,7 +9,8 @@ import {
   MenuItem,
   Button,
 } from '@mui/material';
-import { useState } from 'react';
+import { useLoader } from 'components/FullPageLoader/FullPageLoader.provider';
+import { useEffect } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -36,30 +37,21 @@ const Admissions = () => {
     reset,
     formState: { errors },
   } = useForm<FormInputs>();
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const { setLoading } = useLoader();
+
+  useEffect(() => setLoading(false), []);
 
   const onSubmit: SubmitHandler<FormInputs> = (data) => {
-    setIsSubmitting(true); // Set isSubmitting to true when form submission starts
+    setLoading(true); // Set isSubmitting to true when form submission starts
 
     fetch(
-      'https://script.google.com/macros/s/AKfycbyc5E9enHug7EIwLkHo4HDTPbXRlu0onWGAoL-dGDpu7ZWYYY6m1gzZi8uEE_6Z7556/exec',
-      {
-        mode: 'no-cors',
-        // redirect: 'follow',
-        method: 'POST',
-        body: JSON.stringify(data),
-        headers: {
-          'Content-Type': 'application/json',
-          'Access-Control-Allow-Origin': '*',
-        },
-      }
+      `https://script.google.com/macros/s/AKfycbyEM_SQF_9quvS6jPX9vIVgjpNo3ZDr4-orMgaqjZ62g8ALzqhHuxq7gug8MHtDuYb_/exec?section=admissions&formDataString=${JSON.stringify(data)}`
     )
       .then((response) => response.json())
       .then((data) => {
-        setIsSubmitting(false);
-        console.log(data, 'Hello'); // Set isSubmitting to false after form submission completes
+        setLoading(false);
 
-        if (data.status === 'success') {
+        if (data.data.status === 'success') {
           toast.success('Form submitted successfully!');
           reset();
           // Reset the form after successful submission
@@ -67,15 +59,13 @@ const Admissions = () => {
           toast.error('Failed to submit form. Please try again.');
         }
       })
-      .catch((error) => {
+      .catch(() => {
         toast.error('Failed to submit form. Please try again.');
-        setIsSubmitting(false); // Set isSubmitting to false if there is an error during form submission
+        setLoading(false); 
       });
   };
 
   const handleReset = () => {
-    console.log('Handle reset');
-    // reset('class');
     reset(undefined); // Reset the form fields
   };
 
@@ -101,36 +91,13 @@ const Admissions = () => {
           >
             At The Aryans Academy, we believe in providing a nurturing
             environment where every student can thrive academically, socially,
-            and emotionally.
-            {/* Our admissions process is designed to help families get
-            to know our school community and to ensure that each student finds
-            the right fit for their educational journey. Why Choose [School
-            Name]? Academic Excellence: Our dedicated faculty and rigorous
-            curriculum prepare students for success in higher education and
-            beyond. Holistic Development: We prioritize the development of the
-            whole child, fostering critical thinking, creativity, and character.
-            Supportive Community: At [School Name], students are part of a
-            supportive community where they are known, valued, and encouraged to
-            pursue their passions. Diverse Opportunities: From arts and
-            athletics to service and leadership, we offer a wide range of
-            opportunities for students to explore their interests and talents.
-            Admissions Process Explore Our School: Learn more about our mission,
-            values, programs, and campus by exploring our website or scheduling
-            a visit.  */}
-            {/* Submit an Application:  */}
+            and emotionally.<br />
             Complete our online application form, providing us with information
-            about your child and your family.
-            {/* Schedule an Interview: Meet with our admissions team to discuss your
-            child's interests, goals, and how they can thrive at [School Name].
-            Receive Admissions Decision: We carefully review each application
-            and strive to provide families with timely admissions decisions. */}
+            about your child and your family.<br />
             Join Our Community We welcome families from diverse backgrounds and
             experiences to join our vibrant school community. If you're ready to
             embark on an enriching educational journey with us, we invite you to
             begin the admissions process today.
-            {/* For more information or
-            assistance with the admissions process, please don't hesitate to
-            contact our admissions office. */}
           </Typography>
         </Box>
         <Box

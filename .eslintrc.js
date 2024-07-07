@@ -29,7 +29,7 @@ module.exports = {
   plugins: ['react', '@typescript-eslint', 'prettier', 'testing-library'],
   rules: {
     indent: ['error', 2],
-    'linebreak-style': ['error', 'unix'],
+    'linebreak-style': 'off',
     quotes: ['error', 'single'],
     semi: ['error', 'always'],
     'prettier/prettier': 'off',

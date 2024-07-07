@@ -1,20 +1,26 @@
 import { Typography, Box } from '@mui/material';
+import { useLoader } from 'components/FullPageLoader/FullPageLoader.provider';
 import { useState, useEffect } from 'react';
 import { FreeMode, Scrollbar, Mousewheel, Autoplay } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
 const NoticeBoard = () => {
   const [notices, setNotices] = useState<string[]>([]);
+  const { setLoading } = useLoader();
 
   useEffect(() => {
+    setLoading(true);
     fetch(
       'https://script.google.com/macros/s/AKfycbzNjMUIWuBTo1SwIi7XPiqQqC-GXABq35k5Q-O7CiiET7hkqNX9Dnbr3yVu752NsudW/exec?section=notices'
     )
       .then((response) => response.json())
       .then((data) => {
         setNotices(data.data);
+        setLoading(false);
       })
-      .catch(() => {});
+      .catch(() => { 
+        setLoading(false);
+      });
   }, []);
 
   return (
@@ -33,6 +39,7 @@ const NoticeBoard = () => {
         flexDirection="column"
         borderRadius="15px"
         maxHeight="40rem"
+        minHeight="40rem"
         padding="2rem 1rem"
         overflow="visible"
         width="100%"
@@ -78,7 +85,7 @@ const NoticeBoard = () => {
             ))}
           </Swiper>
         ) : (
-          <Typography variant="body1" textAlign="center">
+          <Typography variant="body1" textAlign="center" margin="auto">
             It looks like there are no notices to display right now. Stay tuned
             for upcoming announcements!
           </Typography>

@@ -3,6 +3,11 @@ import { IconButton, Dialog, DialogContent, Box } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import CloseIcon from '@mui/icons-material/Close';
 import Typography from '@mui/material/Typography';
+import form80G1 from '../../assets/images/80G-1.jpeg';
+import form80G2 from '../../assets/images/80G-2.jpeg';
+import form12AA from '../../assets/images/12AA.jpeg';
+import { Autoplay, Navigation, Pagination } from 'swiper/modules';
+import { Swiper, SwiperSlide } from 'swiper/react';
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   '& .MuiDialogContent-root': {
@@ -13,14 +18,21 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   },
 }));
 
+const documents = {
+  '80G': [form80G1, form80G2],
+  '12AA': [form12AA]
+};
+
 const DocumentViewerModal = ({
   isOpen,
   handleClose,
   documentTitle,
+  type
 }: {
   isOpen: boolean;
   handleClose: () => void;
   documentTitle: string;
+  type: '80G' | '12AA'
 }) => {
   return (
     <React.Fragment>
@@ -45,15 +57,39 @@ const DocumentViewerModal = ({
           <CloseIcon />
         </IconButton>
         <DialogContent dividers>
-          <Box
-            component="img"
-            src="https://thearyansacademy.in/images/Arrow.png"
-            alt=""
-            height="100%"
-            width="100%"
-            minHeight="25rem"
-            minWidth="20rem"
-          />
+          <Swiper
+            spaceBetween={30}
+            centeredSlides={true}
+            slidesPerView={1}
+            autoplay={{
+              delay: 2500,
+              disableOnInteraction: false,
+            }}
+            pagination={{
+              clickable: true,
+            }}
+            loop={true}
+            navigation={true}
+            rewind={true}
+            modules={[Autoplay, Pagination, Navigation]}
+            className="mySwiper"
+          >
+            {documents[type].map((document, index) => (
+              <Box maxWidth='100%'>
+                <SwiperSlide>
+                  <Box
+                    component="img"
+                    src={document}
+                    alt={`${documentTitle}-${index}`}
+                    height="100%"
+                    width="100%"
+                    minHeight="25rem"
+                    minWidth="20rem"
+                  />
+                </SwiperSlide>
+              </Box>
+            ))}
+          </Swiper>
         </DialogContent>
       </BootstrapDialog>
     </React.Fragment>
