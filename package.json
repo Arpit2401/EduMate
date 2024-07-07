@@ -2,7 +2,7 @@
   "name": "edumate",
   "version": "0.1.0",
   "private": true,
-  "homepage": "thearyansacademy.in/",
+  "homepage": "http://www.thearyansacademy.in",
   "dependencies": {
     "@craco/craco": "^7.1.0",
     "@emotion/react": "^11.11.1",
@@ -47,13 +47,13 @@
   },
   "scripts": {
     "start": "craco start",
-    "build": "craco build",
     "test": "craco test",
     "eject": "craco eject",
     "format": "prettier --write src/**/*.{js,jsx,ts,tsx}",
     "lint": "eslint src/**/*.{js,jsx,ts,tsx}",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d build"
+    "deploy": "gh-pages -d build",
+    "build": "craco build"
   },
   "eslintConfig": {
     "extends": [
