@@ -1,10 +1,6 @@
-import { ExpandMore } from '@mui/icons-material';
 import {
   Box,
   Typography,
-  Accordion,
-  AccordionSummary,
-  AccordionDetails,
   TextField,
   MenuItem,
   Button,
@@ -239,8 +235,6 @@ const Admissions = () => {
                 <MenuItem value="8">Class 8</MenuItem>
                 <MenuItem value="9">Class 9</MenuItem>
                 <MenuItem value="10">Class 10</MenuItem>
-                <MenuItem value="11">Class 11</MenuItem>
-                <MenuItem value="12">Class 12</MenuItem>
               </TextField>
               {errors.grade && errors.grade.type === 'required' && (
                 <span className="error">Class is required</span>
@@ -500,7 +494,7 @@ const Admissions = () => {
           </Box>
         </Box>
       </Box>
-      <Box
+      {/* <Box
         margin="10rem 0"
         padding="2rem 0"
         sx={{ backgroundColor: 'primary.dark' }}
@@ -543,7 +537,7 @@ const Admissions = () => {
             </AccordionDetails>
           </Accordion>
         </Box>
-      </Box>
+      </Box> */}
     </Box>
   );
 };
