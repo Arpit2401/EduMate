@@ -7,12 +7,7 @@ import {
   LockClockOutlined,
 } from '@mui/icons-material';
 
-import {
-  Autoplay,
-  EffectCoverflow,
-  Navigation,
-  Pagination,
-} from 'swiper/modules';
+import { EffectCoverflow, Autoplay } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/pagination';
 
@@ -22,6 +17,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import Testimonials from 'components/Testimonials/Testimonials.component';
 import NoticeBoard from 'components/NoticeBoard/NoticeBoard.component';
 import { useLoader } from 'components/FullPageLoader/FullPageLoader.provider';
+import HomeImg from '../../assets/images/skl-home.jpeg';
 
 const App = () => {
   const isMobile = useMediaQuery('(max-width:768px)');
@@ -48,6 +44,7 @@ const App = () => {
         height="100%"
         minHeight="20rem"
         display="flex"
+        margin="2rem"
         flexDirection={{ xs: 'column', md: 'row' }}
         gap="2rem"
         paddingRight={{ xs: 0, md: '2rem' }}
@@ -57,7 +54,7 @@ const App = () => {
         <Box
           component="img"
           src={`
-            ${event.eventBanner}`}
+            https://www.thearyansacademy.in/static/media/${event.eventBanner}`}
           alt={event.eventName}
           minWidth={{ sx: '100%', md: '35%' }}
           height="100%"
@@ -156,22 +153,86 @@ const App = () => {
   };
 
   const [events, setEvents] = useState<Event[]>([]);
+  const [images, setImages] = useState<string[]>([]);
   const { setLoading } = useLoader();
 
   useEffect(() => {
     setLoading(true);
     fetch(
-      'https://script.google.com/macros/s/AKfycby3Knpxcpy1UmGr-6BoM0iUhatMQnR-J4v4yNhgeQ6OopvOQ6xsUzSX0tM1qj1UcnDL/exec?section=events'
+      'https://script.google.com/macros/s/AKfycbxl31opRGW2muu15lUhp1XCrCbLUY_J3F3yN9rn76P5UtvTlPEAAz948OWqKACiL-y0/exec?section=events'
     )
       .then((response) => response.json())
       .then((data) => {
         setEvents(data.data);
         setLoading(false);
       })
-      .catch(() => { 
+      .catch(() => {
+        setLoading(false);
+      });
+    setLoading(true);
+    fetch(
+      'https://script.google.com/macros/s/AKfycbxl31opRGW2muu15lUhp1XCrCbLUY_J3F3yN9rn76P5UtvTlPEAAz948OWqKACiL-y0/exec?section=images'
+    )
+      .then((response) => response.json())
+      .then((data) => {
+        setImages(data.data);
+        setLoading(false);
+      })
+      .catch(() => {
         setLoading(false);
       });
   }, []);
+
+  useEffect(() => {
+    setLoading(true);
+    fetch(
+      'https://script.google.com/macros/s/AKfycbxl31opRGW2muu15lUhp1XCrCbLUY_J3F3yN9rn76P5UtvTlPEAAz948OWqKACiL-y0/exec?section=images'
+    )
+      .then((response) => response.json())
+      .then((data) => {
+        setImages(data.data);
+        setLoading(false);
+      })
+      .catch(() => {
+        setLoading(false);
+      });
+  }, []);
+
+  const splitListIntoParts = (
+    items: string[],
+    parts: number = 4
+  ): string[][] => {
+    const totalItems = items.length;
+
+    if (totalItems === 0) return Array.from({ length: parts }, () => []);
+
+    // Check if each part can have at least 5 elements
+    if (totalItems < parts * 5) {
+      return [
+        items.slice(0, Math.ceil(totalItems / 2)), // First half
+        items.slice(Math.ceil(totalItems / 2)), // Second half
+        ...Array.from({ length: parts - 2 }, () => []), // Remaining empty
+      ];
+    }
+
+    // Otherwise, distribute the elements evenly across all parts
+    const result: string[][] = Array.from({ length: parts }, () => []);
+    let index = 0;
+    let remainingItems = totalItems;
+
+    for (let i = 0; i < parts; i++) {
+      // Calculate how many elements should go in this part
+      let size = Math.ceil(remainingItems / (parts - i));
+
+      result[i] = items.slice(index, index + size);
+      index += size;
+      remainingItems -= size;
+    }
+
+    return result;
+  };
+
+  const [part1, part2, part3, part4] = splitListIntoParts(images, 4);
 
   return (
     <Box>
@@ -318,7 +379,13 @@ const App = () => {
             </Box>
           </Box>
           <Box maxWidth={{ md: '50%' }}>
-            <Swiper
+            <Box
+              className="swiper-slide_main"
+              height={{ xs: '20rem', sm: '30rem', md: '40rem' }}
+            >
+              <img src={HomeImg} alt="sdf" style={{ borderRadius: '15px' }} />
+            </Box>
+            {/* <Swiper
               slidesPerView={'auto'}
               spaceBetween={30}
               grabCursor={true}
@@ -336,7 +403,7 @@ const App = () => {
                   height={{ xs: '20rem', sm: '30rem', md: '40rem' }}
                 >
                   <img
-                    src="https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60"
+                    src={HomeImg}
                     alt="sdf"
                   />
                 </Box>
@@ -429,9 +496,71 @@ const App = () => {
                   />
                 </Box>
               </SwiperSlide>
+            </Swiper> */}
+          </Box>
+        </Box>
+      </Box>
+      {part3.length > 0 && (
+        <Box
+          minHeight="30rem"
+          margin="10rem 0"
+          sx={{ backgroundColor: 'secondary.main' }}
+        >
+          <Box maxWidth="1280px" margin="auto">
+            <Swiper
+              effect={'coverflow'}
+              grabCursor={true}
+              centeredSlides={true}
+              slidesPerView={isMobile ? 2 : 4}
+              autoplay={{
+                delay: 1500,
+                disableOnInteraction: false,
+              }}
+              modules={[EffectCoverflow, Autoplay]}
+              coverflowEffect={{
+                rotate: 50,
+                stretch: 0,
+                depth: 100,
+                modifier: 1,
+                slideShadows: true,
+              }}
+              className="swiper_gallery"
+            >
+              {part3.map((image: string, index: number) => (
+                <SwiperSlide className="swiper-slide_main_gallery">
+                  <Box
+                    maxWidth="100%"
+                    maxHeight="30rem"
+                    width="30rem"
+                    height="30rem"
+                  >
+                    <img
+                      style={{ width: '100%', height: '100%' }}
+                      src={`
+            https://www.thearyansacademy.in/static/media/${image}`}
+                      alt={`Event ${index}`}
+                    />
+                  </Box>
+                </SwiperSlide>
+              ))}
             </Swiper>
           </Box>
         </Box>
+      )}
+      <Box
+        maxWidth="1280px"
+        padding="0 15px"
+        margin="10rem auto"
+        textAlign="center"
+      >
+        <Typography variant="body1" component="p">
+          Step into our school, where dedicated teachers nurture minds,
+          cutting-edge amenities enrich experiences, and engaging events foster
+          creativity. From innovative curriculum to supportive staff, we create
+          an environment where every student thrives. Explore the endless
+          opportunities awaiting you in our vibrant community of learning and
+          discovery.
+        </Typography>
       </Box>
       <Box
         minHeight="25rem"
@@ -580,21 +709,6 @@ const App = () => {
           </Box>
         </Box>
       </Box>
-      <Box
-        maxWidth="1280px"
-        padding="0 15px"
-        margin="10rem auto"
-        textAlign="center"
-      >
-        <Typography variant="body1" component="p">
-          Step into our school, where dedicated teachers nurture minds,
-          cutting-edge amenities enrich experiences, and engaging events foster
-          creativity. From innovative curriculum to supportive staff, we create
-          an environment where every student thrives. Explore the endless
-          opportunities awaiting you in our vibrant community of learning and
-          discovery.
-        </Typography>
-      </Box>
       <Box maxWidth="1280px" padding="0 15px" margin="0 auto">
         <Box
           display="flex"
@@ -683,7 +797,7 @@ const App = () => {
                   component="h3"
                   color="primary.main"
                 >
-                  12
+                  10
                 </Typography>
               </Box>
               <Box
@@ -715,130 +829,72 @@ const App = () => {
           </Box>
         </Box>
       </Box>
-      <Box
-        minHeight="30rem"
-        margin="10rem 0"
-        sx={{ backgroundColor: 'secondary.main' }}
-      >
-        <Box maxWidth="1280px" margin="auto">
-          <Swiper
-            effect={'coverflow'}
-            grabCursor={true}
-            centeredSlides={true}
-            slidesPerView={isMobile ? 2 : 4}
-            coverflowEffect={{
-              rotate: 50,
-              stretch: 0,
-              depth: 100,
-              modifier: 1,
-              slideShadows: true,
-            }}
-            modules={[EffectCoverflow]}
-            className="swiper_gallery"
-          >
-            <SwiperSlide className="swiper-slide_main_gallery">
-              <Box maxWidth="30rem" maxHeight="30rem">
-                <img
-                  style={{ width: '100%', height: '100%' }}
-                  src="https://swiperjs.com/demos/images/nature-1.jpg"
-                  alt="asdfasdf"
-                />
-              </Box>
-            </SwiperSlide>
-            <SwiperSlide>
-              <Box maxWidth="30rem" maxHeight="30rem">
-                <img
-                  style={{ width: '100%', height: '100%' }}
-                  alt="asdfasdf"
-                  src="https://swiperjs.com/demos/images/nature-2.jpg"
-                />
-              </Box>
-            </SwiperSlide>
-            <SwiperSlide>
-              <Box maxWidth="30rem" maxHeight="30rem">
-                <img
-                  style={{ width: '100%', height: '100%' }}
-                  src="https://swiperjs.com/demos/images/nature-3.jpg"
-                  alt="asdfasdf"
-                />{' '}
-              </Box>
-            </SwiperSlide>
-            <SwiperSlide>
-              <Box maxWidth="30rem" maxHeight="30rem">
-                <img
-                  style={{ width: '100%', height: '100%' }}
-                  alt="asdfasdf"
-                  src="https://swiperjs.com/demos/images/nature-4.jpg"
-                />{' '}
-              </Box>
-            </SwiperSlide>
-            <SwiperSlide>
-              <Box maxWidth="30rem" maxHeight="30rem">
-                <img
-                  style={{ width: '100%', height: '100%' }}
-                  src="https://swiperjs.com/demos/images/nature-5.jpg"
-                  alt="asdfasdf"
-                />{' '}
-              </Box>
-            </SwiperSlide>
-            <SwiperSlide>
-              <Box maxWidth="30rem" maxHeight="30rem">
-                <img
-                  style={{ width: '100%', height: '100%' }}
-                  alt="asdfasdf"
-                  src="https://swiperjs.com/demos/images/nature-6.jpg"
-                />{' '}
-              </Box>
-            </SwiperSlide>
-            <SwiperSlide>
-              <Box maxWidth="30rem" maxHeight="30rem">
-                <img
-                  style={{ width: '100%', height: '100%' }}
-                  src="https://swiperjs.com/demos/images/nature-7.jpg"
-                  alt="asdfasdf"
-                />{' '}
-              </Box>
-            </SwiperSlide>
-            <SwiperSlide>
-              <Box maxWidth="30rem" maxHeight="30rem">
-                <img
-                  style={{ width: '100%', height: '100%' }}
-                  alt="asdfasdf"
-                  src="https://swiperjs.com/demos/images/nature-8.jpg"
-                />{' '}
-              </Box>
-            </SwiperSlide>
-            <SwiperSlide>
-              <Box maxWidth="30rem" maxHeight="30rem">
-                <img
-                  style={{ width: '100%', height: '100%' }}
-                  alt="asdfasdf"
-                  src="https://swiperjs.com/demos/images/nature-9.jpg"
-                />{' '}
-              </Box>
-            </SwiperSlide>
-          </Swiper>
-        </Box>
-      </Box>
-      {events.length > 0 && 
-      <Box
-        maxWidth="1280px"
-        margin={{ xs: '10rem 2rem', md: '10rem auto' }}
-        display="flex"
-        flexDirection="column"
-        alignItems="center"
-      >
-        <Typography
-          variant="h2"
-          component="h2"
-          textAlign="center"
-          color="secondary.main"
-          marginBottom="2rem"
+      {part1.length > 0 && (
+        <Box
+          minHeight="30rem"
+          margin="10rem 0"
+          sx={{ backgroundColor: 'secondary.main' }}
         >
-          Recent Events
-        </Typography>
-        <EventSlider eventsData={events} />
-        {/* <Button
+          <Box maxWidth="1280px" margin="auto">
+            <Swiper
+              effect={'coverflow'}
+              grabCursor={true}
+              centeredSlides={true}
+              slidesPerView={isMobile ? 2 : 4}
+              coverflowEffect={{
+                rotate: 50,
+                stretch: 0,
+                depth: 100,
+                modifier: 1,
+                slideShadows: true,
+              }}
+              autoplay={{
+                delay: 1500,
+                disableOnInteraction: false,
+              }}
+              modules={[EffectCoverflow, Autoplay]}
+              className="swiper_gallery"
+            >
+              {part1.map((image: string, index: number) => (
+                <SwiperSlide className="swiper-slide_main_gallery">
+                  <Box
+                    maxWidth="100%"
+                    maxHeight="30rem"
+                    width="30rem"
+                    height="30rem"
+                  >
+                    <img
+                      style={{ width: '100%', height: '100%' }}
+                      src={`
+            https://www.thearyansacademy.in/static/media/${image}`}
+                      alt={`Event ${index}`}
+                    />
+                  </Box>
+                </SwiperSlide>
+              ))}
+            </Swiper>
+          </Box>
+        </Box>
+      )}
+      {events.length > 0 && (
+        <Box
+          maxWidth="1280px"
+          margin={{ xs: '10rem 2rem', md: '10rem auto' }}
+          display="flex"
+          flexDirection="column"
+          alignItems="center"
+        >
+          <Typography
+            variant="h2"
+            component="h2"
+            textAlign="center"
+            color="secondary.main"
+            marginBottom="2rem"
+          >
+            Recent Events
+          </Typography>
+          <EventSlider eventsData={events} />
+          {/* <Button
           href="/events"
           variant="contained"
           sx={{
@@ -850,113 +906,103 @@ const App = () => {
         >
           View More
         </Button> */}
-      </Box>}
-      <Box
-        minHeight="30rem"
-        margin="10rem 0"
-        sx={{ backgroundColor: 'primary.dark' }}
-      >
-        <Box maxWidth="1280px" margin="auto">
-          <Swiper
-            effect={'coverflow'}
-            grabCursor={true}
-            centeredSlides={true}
-            slidesPerView={isMobile ? 2 : 4}
-            coverflowEffect={{
-              rotate: 50,
-              stretch: 0,
-              depth: 100,
-              modifier: 1,
-              slideShadows: true,
-            }}
-            modules={[EffectCoverflow]}
-            className="swiper_gallery"
-          >
-            <SwiperSlide className="swiper-slide_main_gallery">
-              <Box maxWidth="30rem" maxHeight="30rem">
-                <img
-                  style={{ width: '100%', height: '100%' }}
-                  src="https://swiperjs.com/demos/images/nature-1.jpg"
-                  alt="asdfasdf"
-                />
-              </Box>
-            </SwiperSlide>
-            <SwiperSlide>
-              <Box maxWidth="30rem" maxHeight="30rem">
-                <img
-                  style={{ width: '100%', height: '100%' }}
-                  alt="asdfasdf"
-                  src="https://swiperjs.com/demos/images/nature-2.jpg"
-                />
-              </Box>
-            </SwiperSlide>
-            <SwiperSlide>
-              <Box maxWidth="30rem" maxHeight="30rem">
-                <img
-                  style={{ width: '100%', height: '100%' }}
-                  src="https://swiperjs.com/demos/images/nature-3.jpg"
-                  alt="asdfasdf"
-                />{' '}
-              </Box>
-            </SwiperSlide>
-            <SwiperSlide>
-              <Box maxWidth="30rem" maxHeight="30rem">
-                <img
-                  style={{ width: '100%', height: '100%' }}
-                  alt="asdfasdf"
-                  src="https://swiperjs.com/demos/images/nature-4.jpg"
-                />{' '}
-              </Box>
-            </SwiperSlide>
-            <SwiperSlide>
-              <Box maxWidth="30rem" maxHeight="30rem">
-                <img
-                  style={{ width: '100%', height: '100%' }}
-                  src="https://swiperjs.com/demos/images/nature-5.jpg"
-                  alt="asdfasdf"
-                />{' '}
-              </Box>
-            </SwiperSlide>
-            <SwiperSlide>
-              <Box maxWidth="30rem" maxHeight="30rem">
-                <img
-                  style={{ width: '100%', height: '100%' }}
-                  alt="asdfasdf"
-                  src="https://swiperjs.com/demos/images/nature-6.jpg"
-                />{' '}
-              </Box>
-            </SwiperSlide>
-            <SwiperSlide>
-              <Box maxWidth="30rem" maxHeight="30rem">
-                <img
-                  style={{ width: '100%', height: '100%' }}
-                  src="https://swiperjs.com/demos/images/nature-7.jpg"
-                  alt="asdfasdf"
-                />{' '}
-              </Box>
-            </SwiperSlide>
-            <SwiperSlide>
-              <Box maxWidth="30rem" maxHeight="30rem">
-                <img
-                  style={{ width: '100%', height: '100%' }}
-                  alt="asdfasdf"
-                  src="https://swiperjs.com/demos/images/nature-8.jpg"
-                />{' '}
-              </Box>
-            </SwiperSlide>
-            <SwiperSlide>
-              <Box maxWidth="30rem" maxHeight="30rem">
-                <img
-                  style={{ width: '100%', height: '100%' }}
-                  alt="asdfasdf"
-                  src="https://swiperjs.com/demos/images/nature-9.jpg"
-                />{' '}
-              </Box>
-            </SwiperSlide>
-          </Swiper>
         </Box>
-      </Box>
+      )}
+      {part2.length > 0 && (
+        <Box
+          minHeight="30rem"
+          margin="10rem 0"
+          sx={{ backgroundColor: 'primary.dark' }}
+        >
+          <Box maxWidth="1280px" margin="auto">
+            <Swiper
+              effect={'coverflow'}
+              grabCursor={true}
+              centeredSlides={true}
+              slidesPerView={isMobile ? 2 : 4}
+              coverflowEffect={{
+                rotate: 50,
+                stretch: 0,
+                depth: 100,
+                modifier: 1,
+                slideShadows: true,
+              }}
+              autoplay={{
+                delay: 1500,
+                disableOnInteraction: false,
+              }}
+              modules={[EffectCoverflow, Autoplay]}
+              className="swiper_gallery"
+            >
+              {part2.map((image: string, index: number) => (
+                <SwiperSlide className="swiper-slide_main_gallery">
+                  <Box
+                    maxWidth="100%"
+                    maxHeight="30rem"
+                    width="30rem"
+                    height="30rem"
+                  >
+                    <img
+                      style={{ width: '100%', height: '100%' }}
+                      src={`
+            https://www.thearyansacademy.in/static/media/${image}`}
+                      alt={`Event ${index}`}
+                    />
+                  </Box>
+                </SwiperSlide>
+              ))}
+            </Swiper>
+          </Box>
+        </Box>
+      )}
       <Testimonials />
+      {part4.length > 0 && (
+        <Box
+          minHeight="30rem"
+          margin="10rem 0"
+          sx={{ backgroundColor: 'secondary.main' }}
+        >
+          <Box maxWidth="1280px" margin="auto">
+            <Swiper
+              effect={'coverflow'}
+              grabCursor={true}
+              centeredSlides={true}
+              slidesPerView={isMobile ? 2 : 4}
+              coverflowEffect={{
+                rotate: 50,
+                stretch: 0,
+                depth: 100,
+                modifier: 1,
+                slideShadows: true,
+              }}
+              autoplay={{
+                delay: 1500,
+                disableOnInteraction: false,
+              }}
+              modules={[EffectCoverflow, Autoplay]}
+              className="swiper_gallery"
+            >
+              {part4.map((image: string, index: number) => (
+                <SwiperSlide className="swiper-slide_main_gallery">
+                  <Box
+                    maxWidth="100%"
+                    maxHeight="30rem"
+                    width="30rem"
+                    height="30rem"
+                  >
+                    <img
+                      style={{ width: '100%', height: '100%' }}
+                      src={`
+            https://www.thearyansacademy.in/static/media/${image}`}
+                      alt={`Event ${index}`}
+                    />
+                  </Box>
+                </SwiperSlide>
+              ))}
+            </Swiper>
+          </Box>
+        </Box>
+      )}
     </Box>
   );
 };
