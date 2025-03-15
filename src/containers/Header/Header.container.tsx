@@ -1,7 +1,7 @@
-import { FacebookOutlined, Instagram, Twitter } from '@mui/icons-material';
+import { FacebookOutlined, Instagram, YouTube } from '@mui/icons-material';
 import { Box, Link, Typography } from '@mui/material';
 
-import logo from '../../assets/images/aks1.png';
+import logo from '../../assets/images/logo.jpg';
 import { routeLink } from '@constants';
 import { useLocation } from 'react-router-dom';
 
@@ -9,15 +9,15 @@ const Header = () => {
   const socials = [
     {
       name: 'Facebook',
-      url: 'facebook.com',
+      url: 'https://www.facebook.com/share/15bU6PJ7d4/',
       icon: <FacebookOutlined fontSize="large" />,
     },
     {
       name: 'Instagram',
-      url: 'instagram.com',
+      url: 'https://www.instagram.com/the_aryans_academy/',
       icon: <Instagram fontSize="large" />,
     },
-    { name: 'X', url: 'x.com', icon: <Twitter fontSize="large" /> },
+    { name: 'YouTube', url: 'https://youtube.com/@aryanacademy-pd2mf?si=zbyLZkdJqbWg43hD', icon: <YouTube fontSize="large" /> },
   ];
   const pages = [
     { name: 'HOME', title: 'Home' },
@@ -59,6 +59,25 @@ const Header = () => {
               <Typography component="h5" variant="h5" color="primary.main">
                 Call
               </Typography>
+              <Link
+                href="tel:+91 6391171765"
+                sx={{
+                  cursor: 'pointer',
+                  textDecoration: 'none',
+                }}
+              >
+                <Typography
+                  component="p"
+                  variant="body1"
+                  sx={{
+                    '&:hover': {
+                      color: 'secondary.main',
+                    },
+                  }}
+                >
+                  +91 6391171765
+                </Typography>
+              </Link>
               <Link
                 href="tel:+91 8423793001"
                 sx={{
@@ -135,10 +154,10 @@ const Header = () => {
         >
           <Link
             href="/"
-            maxWidth="10%"
-            maxHeight="10%"
-            width="10%"
-            height="10%"
+            maxWidth="6%"
+            maxHeight="6%"
+            width="6%"
+            height="6%"
           >
             <Box
               component="img"
