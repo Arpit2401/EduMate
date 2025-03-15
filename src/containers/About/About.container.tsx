@@ -1,6 +1,10 @@
 import { Box, Typography, useMediaQuery } from '@mui/material';
 import { useLoader } from 'components/FullPageLoader/FullPageLoader.provider';
 import { useEffect } from 'react';
+import AboutImg from '../../assets/images/about-us.jpeg';
+import MissionImg from '../../assets/images/mission.jpeg';
+import VisionImg from '../../assets/images/vision.jpeg';
+import PrincipleImg from '../../assets/images/principle.jpeg';
 
 const About = () => {
   const isMobile = useMediaQuery('(max-width:768px)');
@@ -14,12 +18,11 @@ const About = () => {
         <Box
           borderRadius="15px"
           maxWidth={{ xs: '80%', md: '900px' }}
-          maxHeight={{ xs: '20rem', sm: '30rem', md: '40rem' }}
           margin="2rem auto"
-          height={{ xs: '20rem', md: '25rem' }}
+          height={{ xs: '20rem', sm: '30rem', md: '40rem' }}
         >
           <img
-            src="https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60"
+            src={AboutImg}
             alt="sdf"
             style={{
               width: '100%',
@@ -143,7 +146,7 @@ const About = () => {
             component="h3"
             color="primary.main"
           >
-            12
+            10
           </Typography>
         </Box>
         <Box
@@ -208,7 +211,7 @@ const About = () => {
           </Box>
           <Box
             component="img"
-            src="https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60"
+            src={MissionImg}
             alt="sdf"
             maxWidth="50%"
             display={{ xs: 'none', md: 'block' }}
@@ -226,7 +229,7 @@ const About = () => {
         >
           <Box
             component="img"
-            src="https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60"
+            src={VisionImg}
             alt="sdf"
             maxWidth="50%"
             display={{ xs: 'none', md: 'block' }}
@@ -297,7 +300,7 @@ const About = () => {
           >
             <Box height="100%" width="100%">
               <img
-                src="https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60"
+                src={PrincipleImg}
                 alt="sdf"
                 style={{
                   height: '100%',
@@ -391,7 +394,7 @@ const About = () => {
             <Box display="flex" flexDirection="column" maxWidth="40%">
               <Box height="100%" width="100%">
                 <img
-                  src="https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60"
+                  src={PrincipleImg}
                   alt="sdf"
                   style={{
                     height: '100%',
@@ -507,7 +510,7 @@ const About = () => {
             color="primary.main"
             alignSelf="center"
           >
-            12 years of Excellence
+            15 years of Excellence
           </Typography>
         </Box>
         <Box
@@ -570,7 +573,7 @@ const About = () => {
             color="primary.main"
             alignSelf="center"
           >
-            12 years of Excellence
+            15 years of Excellence
           </Typography>
         </Box> */}
       </Box>
