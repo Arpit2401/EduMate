@@ -21,16 +21,16 @@ import {
   FacebookOutlined,
   Instagram,
   Menu,
-  Twitter,
+  YouTube,
 } from '@mui/icons-material';
 import { routeLink } from '@constants';
-import logo from '../../assets/images/aks1.png';
+import logo from '../../assets/images/logo.jpg';
 // Elipses at menu item
 // max width for top menu
 
 const MainLayout: React.FunctionComponent = (): JSX.Element => {
   const address = 'Sant Nagar, Vill Gorari, Robertsganj, Sonebhandra. 231216';
-  const contactDetails = 'Phone:  +91 8423793001, Email: info@example.com';
+  const contactDetails = 'Phone:  +91 6391171765 / +91 8423793001, Email: thearyanacademy127@gmail.com';
   const isMobile = useMediaQuery('(max-width:768px)');
   const pages = [
     { name: 'HOME', title: 'Home' },
@@ -50,15 +50,15 @@ const MainLayout: React.FunctionComponent = (): JSX.Element => {
   const socials = [
     {
       name: 'Facebook',
-      url: 'facebook.com',
+      url: 'https://www.facebook.com/share/15bU6PJ7d4/',
       icon: <FacebookOutlined fontSize="large" />,
     },
     {
       name: 'Instagram',
-      url: 'instagram.com',
+      url: 'https://www.instagram.com/the_aryans_academy/',
       icon: <Instagram fontSize="large" />,
     },
-    { name: 'X', url: 'x.com', icon: <Twitter fontSize="large" /> },
+    { name: 'YouTube', url: 'https://youtube.com/@aryanacademy-pd2mf?si=zbyLZkdJqbWg43hD', icon: <YouTube fontSize="large" /> },
   ];
 
   const HamburgerMenu = () => {
@@ -186,6 +186,25 @@ const MainLayout: React.FunctionComponent = (): JSX.Element => {
                 <Typography component="h5" variant="h5" color="primary.main">
                   Call
                 </Typography>
+                <Link
+                  href="tel:+91 6391171765"
+                  sx={{
+                    cursor: 'pointer',
+                    textDecoration: 'none',
+                  }}
+                >
+                  <Typography
+                    component="p"
+                    variant="body1"
+                    sx={{
+                      '&:hover': {
+                        color: 'secondary.main',
+                      },
+                    }}
+                  >
+                    +91 6391171765
+                  </Typography>
+                </Link>
                 <Link
                   href="tel:+91 8423793001"
                   sx={{
